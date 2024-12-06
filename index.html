@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sass Lab</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.11.1/sass.sync.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow: auto;
+        }
+
+        .output {
+            padding: 10px;
+            background: #e9f7df;
+            border: 1px solid #2ecc71;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .output.error {
+            background: #fce4e4;
+            border: 1px solid #e74c3c;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sass Preprocessor Lab</h1>
+    <p>Write your Sass code below and press "Verify".</p>
+    <textarea id="sass-code">/* Write your Sass code here */</textarea>
+    <button onclick="verify()">Verify</button>
+    <div id="output" class="output"></div>
+    <pre id="compiled-css"></pre>
+    <script>
+        function verify() {
+            const sassInput = document.getElementById('sass-code').value;
+            const outputDiv = document.getElementById('output');
+            const compiledCSS = document.getElementById('compiled-css');
+
+            Sass.compile(sassInput, result => {
+                const expectedOutput = `body { background-color: red; }`;
+                if (result.text.trim() === expectedOutput.trim()) {
+                    outputDiv.innerText = "Correct! Your Sass code compiled as expected.";
+                    outputDiv.className = "output";
+                    outputDiv.style.display = "block";
+                } else {
+                    outputDiv.innerText = "Incorrect. Check your Sass code and try again.";
+                    outputDiv.className = "output error";
+                    outputDiv.style.display = "block";
+                }
+
+                compiledCSS.innerText = "Compiled CSS:\n" + result.text;
+            });
+        }
+    </script>
